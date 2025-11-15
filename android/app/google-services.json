@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "681625931457",
+    "project_id": "provadaora",
+    "storage_bucket": "provadaora.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681625931457:android:09336d53b6526f3e4d8e40",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_23"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKlmSVfeCFHFkazpBO1X2JstjU9l7OdlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681625931457:android:aeb90ea96af40ecf4d8e40",
+        "android_client_info": {
+          "package_name": "com.example.flutter_bom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKlmSVfeCFHFkazpBO1X2JstjU9l7OdlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
