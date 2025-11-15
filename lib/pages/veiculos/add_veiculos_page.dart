@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddVeiculosPage extends StatefulWidget {
   @override
@@ -8,16 +9,14 @@ class AddVeiculosPage extends StatefulWidget {
 
 class _AddVeiculosPageState extends State<AddVeiculosPage> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   final TextEditingController modeloCtrl = TextEditingController();
   final TextEditingController marcaCtrl = TextEditingController();
   final TextEditingController placaCtrl = TextEditingController();
   final TextEditingController anoCtrl = TextEditingController();
 
-  // Combustível escolhido
   String? combustivelSelecionado;
-
-  // Lista de opções do dropdown
   final combustiveis = ["Álcool", "Gasolina", "Diesel"];
 
   @override
@@ -49,7 +48,6 @@ class _AddVeiculosPageState extends State<AddVeiculosPage> {
 
             SizedBox(height: 12),
 
-            /// 🔽 DROPDOWN DE COMBUSTÍVEL
             DropdownButtonFormField<String>(
               value: combustivelSelecionado,
               decoration: InputDecoration(labelText: "Tipo de Combustível"),
@@ -78,7 +76,13 @@ class _AddVeiculosPageState extends State<AddVeiculosPage> {
                   return;
                 }
 
-                await db.collection("veiculos").add({
+                final uid = auth.currentUser!.uid;
+
+                await db
+                    .collection("users")
+                    .doc(uid)
+                    .collection("veiculos")
+                    .add({
                   "modelo": modeloCtrl.text,
                   "marca": marcaCtrl.text,
                   "placa": placaCtrl.text,

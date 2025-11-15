@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'veiculos_model.dart';
 
 class EditVeiculosPage extends StatefulWidget {
@@ -13,13 +14,13 @@ class EditVeiculosPage extends StatefulWidget {
 
 class _EditVeiculosPageState extends State<EditVeiculosPage> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   late TextEditingController modeloCtrl;
   late TextEditingController marcaCtrl;
   late TextEditingController placaCtrl;
   late TextEditingController anoCtrl;
 
-  
   late String combustivelSelecionado;
 
   final combustiveis = ["Álcool", "Gasolina", "Diesel"];
@@ -64,7 +65,6 @@ class _EditVeiculosPageState extends State<EditVeiculosPage> {
 
             SizedBox(height: 10),
 
-            
             DropdownButtonFormField<String>(
               value: combustivelSelecionado,
               decoration: InputDecoration(labelText: "Tipo de Combustível"),
@@ -86,7 +86,12 @@ class _EditVeiculosPageState extends State<EditVeiculosPage> {
             ElevatedButton(
               child: Text("Atualizar"),
               onPressed: () async {
-                await db.collection("veiculos").doc(widget.veiculo.id).update({
+                await db
+                    .collection("users")
+                    .doc(auth.currentUser!.uid)
+                    .collection("veiculos")
+                    .doc(widget.veiculo.id)
+                    .update({
                   "modelo": modeloCtrl.text,
                   "marca": marcaCtrl.text,
                   "placa": placaCtrl.text,

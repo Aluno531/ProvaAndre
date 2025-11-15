@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'veiculos_model.dart';
 
 import 'add_veiculos_page.dart';
@@ -7,6 +8,7 @@ import 'edit_veiculos_page.dart';
 
 class VeiculosListPage extends StatelessWidget {
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   VeiculosListPage({super.key});
 
@@ -26,7 +28,11 @@ class VeiculosListPage extends StatelessWidget {
       ),
 
       body: StreamBuilder<QuerySnapshot>(
-        stream: db.collection("veiculos").snapshots(),
+        stream: db
+          .collection("users")
+          .doc(auth.currentUser!.uid)
+          .collection("veiculos")
+          .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -68,7 +74,12 @@ class VeiculosListPage extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          db.collection("veiculos").doc(veiculo.id).delete();
+                          db
+                            .collection("users")
+                            .doc(auth.currentUser!.uid)
+                            .collection("veiculos")
+                            .doc(veiculo.id)
+                            .delete();
                         },
                       ),
                     ],

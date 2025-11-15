@@ -1,17 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class VeiculosService {
-  final CollectionReference veiculos =
-      FirebaseFirestore.instance.collection('veiculos');
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+ 
+  String get uid => _auth.currentUser!.uid;
+
+  
+  CollectionReference get veiculosRef =>
+      _db.collection('users').doc(uid).collection('veiculos');
 
   Future adicionarVeiculo(
     String modelo,
     String marca,
     String placa,
-    String ano,
+    int ano,
     String tipoCombustivel,
   ) async {
-    await veiculos.add({
+    await veiculosRef.add({
       'modelo': modelo,
       'marca': marca,
       'placa': placa,
@@ -22,6 +30,6 @@ class VeiculosService {
   }
 
   Stream<QuerySnapshot> listarVeiculos() {
-    return veiculos.orderBy('createdAt', descending: true).snapshots();
+    return veiculosRef.orderBy('createdAt', descending: true).snapshots();
   }
 }
