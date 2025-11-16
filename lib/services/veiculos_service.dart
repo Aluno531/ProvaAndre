@@ -5,10 +5,10 @@ class VeiculosService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
- 
+  
   String get uid => _auth.currentUser!.uid;
 
-  
+ 
   CollectionReference get veiculosRef =>
       _db.collection('users').doc(uid).collection('veiculos');
 

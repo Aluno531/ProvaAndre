@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
 import 'veiculos/veiculos_list_page.dart';
+import '../pages/abastecimento/abastecimentos_list_page.dart'; // <-- importe a lista de abastecimentos
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -40,9 +41,21 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
+
+            const SizedBox(height: 20),
+
+            ElevatedButton(
+              child: Text("Gerenciar Abastecimentos"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => AbastecimentosListPage()),
+                );
+              },
+            ),
           ],
         ),
       ),
-    ); 
+    );
   }
 }
