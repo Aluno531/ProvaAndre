@@ -22,7 +22,13 @@ class _AddVeiculosPageState extends State<AddVeiculosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Adicionar Veículo")),
+      appBar: AppBar(title: Text("Adicionar Veículo"),
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+      backgroundColor: Colors.blue, 
+      ),
+
+    
+
 
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -66,34 +72,45 @@ class _AddVeiculosPageState extends State<AddVeiculosPage> {
 
             SizedBox(height: 20),
 
-            ElevatedButton(
-              child: Text("Salvar"),
-              onPressed: () async {
-                if (combustivelSelecionado == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Selecione o tipo de combustível")),
-                  );
-                  return;
-                }
+            ElevatedButton.icon(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.blue,     
+    foregroundColor: Colors.white,    
+    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+  ),
+  icon: Icon(Icons.directions_car),
+  label: Text(
+    "Salvar",
+    style: TextStyle(fontSize: 18),
+  ),
+  onPressed: () async {
+    if (combustivelSelecionado == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Selecione o tipo de combustível")),
+      );
+      return;
+    }
 
-                final uid = auth.currentUser!.uid;
+    final uid = auth.currentUser!.uid;
 
-                await db
-                    .collection("users")
-                    .doc(uid)
-                    .collection("veiculos")
-                    .add({
-                  "modelo": modeloCtrl.text,
-                  "marca": marcaCtrl.text,
-                  "placa": placaCtrl.text,
-                  "ano": int.parse(anoCtrl.text),
-                  "tipoCombustivel": combustivelSelecionado,
-                  "createdAt": Timestamp.now(),
-                });
+    await db
+        .collection("users")
+        .doc(uid)
+        .collection("veiculos")
+        .add({
+      "modelo": modeloCtrl.text,
+      "marca": marcaCtrl.text,
+      "placa": placaCtrl.text,
+      "ano": int.parse(anoCtrl.text),
+      "tipoCombustivel": combustivelSelecionado,
+      "createdAt": Timestamp.now(),
+    });
 
-                Navigator.pop(context);
-              },
-            )
+    Navigator.pop(context);
+  },
+)
+
+
           ],
         ),
       ),

@@ -38,73 +38,91 @@ class _EditVeiculosPageState extends State<EditVeiculosPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Editar Veículo")),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: modeloCtrl,
-              decoration: InputDecoration(labelText: "Modelo"),
-            ),
-            TextField(
-              controller: marcaCtrl,
-              decoration: InputDecoration(labelText: "Marca"),
-            ),
-            TextField(
-              controller: placaCtrl,
-              decoration: InputDecoration(labelText: "Placa"),
-            ),
-            TextField(
-              controller: anoCtrl,
-              decoration: InputDecoration(labelText: "Ano"),
-              keyboardType: TextInputType.number,
-            ),
+  @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text("Editar Veículo"),
+      backgroundColor: Colors.blue,
+      foregroundColor: Colors.white,
+    ),
 
-            SizedBox(height: 10),
+    body: Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TextField(
+            controller: modeloCtrl,
+            decoration: InputDecoration(labelText: "Modelo"),
+          ),
+          TextField(
+            controller: marcaCtrl,
+            decoration: InputDecoration(labelText: "Marca"),
+          ),
+          TextField(
+            controller: placaCtrl,
+            decoration: InputDecoration(labelText: "Placa"),
+          ),
+          TextField(
+            controller: anoCtrl,
+            decoration: InputDecoration(labelText: "Ano"),
+            keyboardType: TextInputType.number,
+          ),
 
-            DropdownButtonFormField<String>(
-              value: combustivelSelecionado,
-              decoration: InputDecoration(labelText: "Tipo de Combustível"),
-              items: combustiveis.map((tipo) {
-                return DropdownMenuItem(
-                  value: tipo,
-                  child: Text(tipo),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  combustivelSelecionado = value!;
-                });
-              },
+          SizedBox(height: 10),
+
+          DropdownButtonFormField<String>(
+            value: combustivelSelecionado,
+            decoration: InputDecoration(labelText: "Tipo de Combustível"),
+            items: combustiveis.map((tipo) {
+              return DropdownMenuItem(
+                value: tipo,
+                child: Text(tipo),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                combustivelSelecionado = value!;
+              });
+            },
+          ),
+
+          SizedBox(height: 20),
+
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,     
+              foregroundColor: Colors.white,    
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
             ),
-
-            SizedBox(height: 20),
-
-            ElevatedButton(
-              child: Text("Atualizar"),
-              onPressed: () async {
-                await db
-                    .collection("users")
-                    .doc(auth.currentUser!.uid)
-                    .collection("veiculos")
-                    .doc(widget.veiculo.id)
-                    .update({
-                  "modelo": modeloCtrl.text,
-                  "marca": marcaCtrl.text,
-                  "placa": placaCtrl.text,
-                  "ano": int.parse(anoCtrl.text),
-                  "tipoCombustivel": combustivelSelecionado,
-                });
-
-                Navigator.pop(context);
-              },
+            icon: Icon(Icons.directions_car),
+            label: Text(
+              "Atualizar",
+              style: TextStyle(fontSize: 18),
             ),
-          ],
-        ),
+            onPressed: () async {
+              await db
+                  .collection("users")
+                  .doc(auth.currentUser!.uid)
+                  .collection("veiculos")
+                  .doc(widget.veiculo.id)
+                  .update({
+                "modelo": modeloCtrl.text,
+                "marca": marcaCtrl.text,
+                "placa": placaCtrl.text,
+                "ano": int.parse(anoCtrl.text),
+                "tipoCombustivel": combustivelSelecionado,
+              });
+
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }
+
+       
+  }
+

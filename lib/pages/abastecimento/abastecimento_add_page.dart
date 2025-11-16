@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import '../veiculos/veiculos_model.dart';
 import '../../services/veiculos_service.dart';
 import 'abastecimento_service.dart';
@@ -22,7 +22,12 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Novo Abastecimento")),
+      appBar: AppBar(title: Text("Novo Abastecimento"),
+       titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+      backgroundColor: Colors.indigo, 
+      ),
+     
+
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -67,25 +72,35 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
 
             SizedBox(height: 20),
 
-            ElevatedButton(
-              child: Text("Salvar"),
-              onPressed: () async {
-                if (veiculoSelecionado == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Selecione um veículo")),
-                  );
-                  return;
-                }
+           ElevatedButton.icon(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.indigo,   // fundo
+    foregroundColor: Colors.white,    // texto + ícone brancos
+    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+  ),
+  icon: Icon(Icons.local_gas_station),
+  label: Text(
+    "Salvar",
+    style: TextStyle(fontSize: 18),
+  ),
+  onPressed: () async {
+    if (veiculoSelecionado == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Selecione um veículo")),
+      );
+      return;
+    }
 
-                await abastecimentoService.adicionarAbastecimento(
-                  veiculoSelecionado!,
-                  double.parse(litrosCtrl.text),
-                  double.parse(valorCtrl.text),
-                );
+    await abastecimentoService.adicionarAbastecimento(
+      veiculoSelecionado!,
+      double.parse(litrosCtrl.text),
+      double.parse(valorCtrl.text),
+    );
 
-                Navigator.pop(context);
-              },
-            )
+    Navigator.pop(context);
+  },
+)
+
           ],
         ),
       ),

@@ -15,7 +15,13 @@ class VeiculosListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Veículos")),
+      appBar: AppBar(title: Text("Veículos"),
+       titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+      backgroundColor: Colors.blue, 
+      ),
+
+  
+
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {

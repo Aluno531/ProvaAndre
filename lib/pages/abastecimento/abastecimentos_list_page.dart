@@ -7,6 +7,7 @@ import 'abastecimento_model.dart';
 import 'abastecimento_add_page.dart';
 import 'abastecimento_edit_page.dart';
 
+
 class AbastecimentosListPage extends StatelessWidget {
   final service = AbastecimentoService();
   final veiculosService = VeiculosService();
@@ -14,7 +15,14 @@ class AbastecimentosListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Abastecimentos")),
+      appBar: AppBar(title: Text("Abastecimentos"),
+       titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+      backgroundColor: Colors.indigo, 
+      
+      ),
+
+
+      
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {

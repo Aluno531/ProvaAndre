@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bom/pages/abastecimento/abastecimento_add_page.dart';
+import 'package:flutter_bom/pages/abastecimento/abastecimentos_list_page.dart';
+import 'package:flutter_bom/pages/veiculos/add_veiculos_page.dart';
+import 'package:flutter_bom/pages/veiculos/veiculos_list_page.dart';
 
 // Arquivo gerado pelo FlutterFire CLI
 import 'firebase_options.dart';
@@ -34,6 +38,12 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (_) => const LoginPage(),
         '/home': (_) => HomePage(),
+        '/addVeiculo': (_) => AddVeiculosPage(),
+        '/meusVeiculos': (_) => VeiculosListPage(),
+        '/addAbastecimento': (_) => AddAbastecimentoPage(),
+        '/abastecimentos': (_) => AbastecimentosListPage(),
+        '/login': (_) => LoginPage(),
+
       },
     );
   }

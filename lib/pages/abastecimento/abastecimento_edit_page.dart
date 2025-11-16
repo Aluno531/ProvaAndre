@@ -34,7 +34,12 @@ class _EditAbastecimentoPageState extends State<EditAbastecimentoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Editar Abastecimento")),
+      appBar: AppBar(title: Text("Editar Abastecimento"),
+       titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+      backgroundColor: Colors.indigo, 
+      ),
+      
+
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -75,20 +80,28 @@ class _EditAbastecimentoPageState extends State<EditAbastecimentoPage> {
 
             SizedBox(height: 20),
 
-            ElevatedButton(
-              child: Text("Atualizar"),
-              onPressed: () async {
-                await service.atualizar(widget.abastecimento.id, {
-                  "quantidadeLitros": double.parse(litrosCtrl.text),
-                  "valorTotal": double.parse(valorCtrl.text),
+            ElevatedButton.icon(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.indigo,   
+    foregroundColor: Colors.white,    
+    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+  ),
+  icon: Icon(Icons.local_gas_station), 
+  label: Text(
+    "Atualizar",
+    style: TextStyle(fontSize: 18),
+  ),
+  onPressed: () async {
+    await service.atualizar(widget.abastecimento.id, {
+      "quantidadeLitros": double.parse(litrosCtrl.text),
+      "valorTotal": double.parse(valorCtrl.text),
+      "veiculoId": widget.abastecimento.veiculoId,
+    });
 
-                  
-                  "veiculoId": widget.abastecimento.veiculoId,
-                });
+    Navigator.pop(context);
+  },
+)
 
-                Navigator.pop(context);
-              },
-            )
           ],
         ),
       ),
