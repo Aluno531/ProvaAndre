@@ -10,16 +10,21 @@ class AbastecimentoService {
   CollectionReference get abastecimentosRef =>
       _db.collection("users").doc(uid).collection("abastecimentos");
 
+  
   Future adicionarAbastecimento(
     String veiculoId,
     double litros,
+    double kmRodados, 
     double valor,
   ) async {
+    double consumo = kmRodados > 0 ? litros / kmRodados : 0; 
+
     await abastecimentosRef.add({
       "veiculoId": veiculoId,
       "quantidadeLitros": litros,
       "valorTotal": valor,
       "data": Timestamp.now(),
+      "consumo": consumo, 
     });
   }
 

@@ -18,16 +18,16 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
 
   final litrosCtrl = TextEditingController();
   final valorCtrl = TextEditingController();
+  final kmCtrl = TextEditingController(); 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Novo Abastecimento"),
-       titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
-      backgroundColor: Colors.indigo, 
+      appBar: AppBar(
+        title: Text("Novo Abastecimento"),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+        backgroundColor: Colors.indigo,
       ),
-     
-
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -35,8 +35,7 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
             StreamBuilder<QuerySnapshot>(
               stream: veiculosService.listarVeiculos(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  return CircularProgressIndicator();
+                if (!snapshot.hasData) return CircularProgressIndicator();
 
                 final veiculos = snapshot.data!.docs;
 
@@ -47,7 +46,8 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
                   decoration: InputDecoration(labelText: "Veículo"),
                   value: veiculoSelecionado,
                   items: veiculos.map((v) {
-                    final veiculo = Veiculo.fromMap(v.id, v.data() as Map<String, dynamic>);
+                    final veiculo =
+                        Veiculo.fromMap(v.id, v.data() as Map<String, dynamic>);
                     return DropdownMenuItem(
                       value: veiculo.id,
                       child: Text("${veiculo.modelo} - ${veiculo.placa}"),
@@ -65,6 +65,12 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
             ),
 
             TextField(
+              controller: kmCtrl, 
+              decoration: InputDecoration(labelText: "Km Rodados"),
+              keyboardType: TextInputType.number,
+            ),
+
+            TextField(
               controller: valorCtrl,
               decoration: InputDecoration(labelText: "Valor Total"),
               keyboardType: TextInputType.number,
@@ -72,35 +78,44 @@ class _AddAbastecimentoPageState extends State<AddAbastecimentoPage> {
 
             SizedBox(height: 20),
 
-           ElevatedButton.icon(
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.indigo,   // fundo
-    foregroundColor: Colors.white,    // texto + ícone brancos
-    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-  ),
-  icon: Icon(Icons.local_gas_station),
-  label: Text(
-    "Salvar",
-    style: TextStyle(fontSize: 18),
-  ),
-  onPressed: () async {
-    if (veiculoSelecionado == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Selecione um veículo")),
-      );
-      return;
-    }
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,   
+                foregroundColor: Colors.white,    
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              ),
+              icon: Icon(Icons.local_gas_station),
+              label: Text(
+                "Salvar",
+                style: TextStyle(fontSize: 18),
+              ),
+              onPressed: () async {
+                if (veiculoSelecionado == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Selecione um veículo")),
+                  );
+                  return;
+                }
 
-    await abastecimentoService.adicionarAbastecimento(
-      veiculoSelecionado!,
-      double.parse(litrosCtrl.text),
-      double.parse(valorCtrl.text),
-    );
+                if (litrosCtrl.text.isEmpty ||
+                    kmCtrl.text.isEmpty ||
+                    valorCtrl.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Preencha todos os campos")),
+                  );
+                  return;
+                }
 
-    Navigator.pop(context);
-  },
-)
+                await abastecimentoService.adicionarAbastecimento(
+                  veiculoSelecionado!,
+                  double.parse(litrosCtrl.text),
+                  double.parse(kmCtrl.text), 
+                  double.parse(valorCtrl.text),
+                );
 
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),

@@ -93,6 +93,17 @@ class HomePage extends StatelessWidget {
             ),
             ),
             
+            Container(
+              
+            child:ListTile(
+              tileColor:Colors.indigo,
+              leading: Icon(Icons.graphic_eq, color: Colors.white),
+              title: Text("Grafico", style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.pushNamed(context, '/grafico');
+              },
+            ),
+            ),
 
             Divider(),
 

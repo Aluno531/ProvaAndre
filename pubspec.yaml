@@ -29,7 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter
+      sdk: flutter
+  fl_chart: ^1.1.1
   
   # Dependência principal - OBRIGATÓRIA
   firebase_core: ^2.30.0 # Use a versão mais recente

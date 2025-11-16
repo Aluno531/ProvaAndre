@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bom/pages/abastecimento/abastecimento_add_page.dart';
 import 'package:flutter_bom/pages/abastecimento/abastecimentos_list_page.dart';
+import 'package:flutter_bom/pages/grafico_page.dart';
 import 'package:flutter_bom/pages/veiculos/add_veiculos_page.dart';
 import 'package:flutter_bom/pages/veiculos/veiculos_list_page.dart';
 
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/addAbastecimento': (_) => AddAbastecimentoPage(),
         '/abastecimentos': (_) => AbastecimentosListPage(),
         '/login': (_) => LoginPage(),
-
+        '/grafico': (_) => const GraficoPage(),
       },
     );
   }
